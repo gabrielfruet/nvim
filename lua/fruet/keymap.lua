@@ -1,0 +1,91 @@
+local map = vim.keymap.set
+local noremap = { noremap = true}
+local silent = { silent = true, noremap = true }
+
+--save buffer
+map('n', '<c-s>', '<cmd>w!<cr>', noremap) -- S ave
+
+--remove highlights
+map('n', ',', '<cmd>noh<cr>', noremap)
+
+--escape key
+map('i', 'jk', '<esc>', noremap)
+
+--buffer
+map('n', '<leader>bc', '<cmd>enew | bdelete #<cr>', noremap)
+map('n', '<leader>bn', '<cmd>bn<cr>', noremap)
+
+--for the gmk67 knob
+map('n', '<f12>', '<cmd>bnext<cr>', noremap)
+map('n', '<f11>', '<cmd>bprevious<cr>', noremap)
+
+map('n', '<Right>', '<cmd>bnext<cr>', noremap)
+map('n', '<Left>', '<cmd>bprevious<cr>', noremap)
+map('n', '<Down>', '<cmd>bd<cr>', noremap)
+map('n', '<Up>', '<cmd>bn<cr>', noremap)
+
+
+--lsp
+map('n', 'K', function()
+    vim.lsp.buf.hover{
+        border = "solid",
+        title = " 󰈙 Documentation "
+    }
+end
+    , noremap)
+map('n', 'gd', vim.lsp.buf.definition, noremap)
+map('n', 'gD', vim.lsp.buf.declaration, noremap)
+map('n', 'gi', vim.lsp.buf.implementation, noremap)
+map('n', '<leader>ca', vim.lsp.buf.code_action, noremap)
+map('n', '<leader>vr', vim.lsp.buf.references, noremap)
+map('n', '<leader>vn',vim.lsp.buf.rename, noremap)
+map('n', '<leader>rf', vim.lsp.buf.references, noremap)
+--map('n', '<leader>ws', vim.lsp.buf.workspace_symbol)
+
+--diagnostic
+local SHOW_DIAGNOSTICS = true
+
+local function toggle_diag()
+    SHOW_DIAGNOSTICS = not SHOW_DIAGNOSTICS
+    vim.diagnostic.config({
+        underline=true,
+        virtual_lines = SHOW_DIAGNOSTICS,
+        virtual_text = not SHOW_DIAGNOSTICS,
+    })
+end
+
+toggle_diag()
+
+vim.keymap.set('n', '<leader>dv', vim.diagnostic.open_float, { noremap = true })
+vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { noremap = true })
+vim.keymap.set('n', '<leader>dt', toggle_diag, { noremap = true })
+
+--quickfix
+map('n', '<leader>co', '<cmd>copen<cr>')
+map('n', '[d', '<cmd>cnext<cr>')
+map('n', ']d', '<cmd>cprevious<cr>')
+map('n', '<leader>cc', '<cmd>cclose<cr>')
+map('n', '<leader>cj', '<cmd>cnewer<cr>')
+map('n', '<leader>ck', '<cmd>colder<cr>')
+
+--locationlist
+map('n', '<leader>lo', '<cmd>lopen<cr>')
+map('n', '[w', '<cmd>lnext<cr>')
+map('n', ']w', '<cmd>lprevious<cr>')
+map('n', '<leader>lc', '<cmd>lclose<cr>')
+map('n', '<leader>lj', '<cmd>lnewer<cr>')
+map('n', '<leader>lk', '<cmd>lolder<cr>')
+
+--merging
+
+--correct o<esc>i behavior, identing correctly
+-- vim.cmd[[function! IndentWithI()
+--     if len(getline('.')) == 0
+--         return "\"_cc"
+--     else
+--         return "i"
+--     endif
+-- endfunction
+-- nnoremap <expr> i IndentWithI()]]
+
+

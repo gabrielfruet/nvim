@@ -1,0 +1,7 @@
+require('fruet.set')
+require('fruet.lazy')
+require('fruet.autocmd')
+require('fruet.keymap')
+require('fruet.lsp')
+require('fruet.statusline')
+require('fruet.tabline')
