@@ -34,48 +34,51 @@ end
 -- SECTION 2: Main Tabline Builder
 -- This function now correctly finds the buffer name and omits the close button.
 ---
+---
+MAX_CONTEXT = 5
 
 local function build_full_tabline()
-    -- Start with our custom mode indicator.
     local line = get_mode() .. ' '
-
     local current_tab = vim.api.nvim_get_current_tabpage()
     local all_tabs = vim.api.nvim_list_tabpages()
 
-    -- Don't render tabs if there's only one.
     if #all_tabs <= 1 then
-        line = line .. '%#TabLineFill#%T'
-        return line
+        return line .. '%#TabLineFill#%T'
     end
 
-    -- Loop through all available tab pages.
     for i, tab in ipairs(all_tabs) do
-        -- Set highlight: TabLineSel for active tab, TabLine for others.
+        -- Highlight: active tab vs inactive tabs
         if tab == current_tab then
             line = line .. '%#TabLineSel#'
         else
             line = line .. '%#TabLine#'
         end
 
-        -- Make the tab label clickable.
-        line = line .. string.format('%%{%d}T', i)
+        -- Make tab clickable
+        line = line .. string.format('%%%dT', i)
 
-        -- Get the active window in this specific tab.
-        local win_handle = vim.api.nvim_tabpage_get_win(tab)
-        -- Get the buffer displayed in that window.
-        local buf_handle = vim.api.nvim_win_get_buf(win_handle)
-        -- Get the name of that buffer.
-        local buf_name = vim.api.nvim_buf_get_name(buf_handle)
+        -- Active window + buffer in this tab
+        local win = vim.api.nvim_tabpage_get_win(tab)
+        local buf = vim.api.nvim_win_get_buf(win)
+        local buf_name = vim.api.nvim_buf_get_name(buf)
 
-        -- Add padding and the file name (just the "tail" of the path).
-        local file_name = vim.fn.fnamemodify(buf_name, ':t')
-        line = line .. ' ' .. (file_name or '[No Name]') .. ' '
+        local label
+        if buf_name == "" then
+            label = "[No Name]"
+        else
+            -- Shorten path more like default `tabline`
+            -- `:~` → show `~` for home, `:.` → relative path, `:h`/`:t` → head/tail
+            buf_name = vim.fn.fnamemodify(buf_name, ":~")
+            ---@type string
+            label = vim.fn.pathshorten(buf_name, 1)
+            -- i want to shorten the string to a cap of 20 chars
+            label = string.sub(label, 1, 20)
+        end
+
+        line = line .. " " .. label .. " "
     end
 
-    -- After the last tab, reset highlight and fill the rest of the line.
-    line = line .. '%#TabLineFill#%T'
-
-    return line
+    return line .. "%#TabLineFill#%T"
 end
 
 
