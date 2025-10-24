@@ -71,8 +71,9 @@ local function build_full_tabline()
             buf_name = vim.fn.fnamemodify(buf_name, ":~")
             ---@type string
             label = vim.fn.pathshorten(buf_name, 1)
-            -- i want to shorten the string to a cap of 20 chars
-            label = string.sub(label, 1, 20)
+            -- -- i want to shorten the string to a cap of 20 chars
+            -- label = string.sub(label, 1, 20)
+            -- label = buf_name
         end
 
         line = line .. " " .. label .. " "

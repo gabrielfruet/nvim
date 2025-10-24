@@ -9,11 +9,12 @@ return {
         local lint_enabled = true
         local nvim_lint = require('lint')
         nvim_lint.linters_by_ft = {
-            python={'ruff'},
+            python={'ruff', 'mypy'},
             lua={'luacheck'},
             bash={'shellcheck'},
             shell={'shellcheck'},
             make={'checkmake'},
+            cpp={'cpplint'}
         }
         local linaugroup = vim.api.nvim_create_augroup("Linting", {clear = true})
         local function try_lint()
