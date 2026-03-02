@@ -4,6 +4,7 @@ vim.opt.clipboard="unnamedplus"
 
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
+vim.opt.conceallevel = 0
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
