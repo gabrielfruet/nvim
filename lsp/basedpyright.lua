@@ -2,10 +2,11 @@ return {
     settings = {
         basedpyright = {
             analysis = {
-                typeCheckingMode = "strict", -- or "standard"/"strict" for stricter checks
+                typeCheckingMode = "basic", -- or "standard"/"strict" for stricter checks
                 autoSearchPaths = true,
                 useLibraryCodeForTypes = true,
                 autoImportCompletions = true,
+                reportMissingTypeStubs = false,
 
                 --     -- Silence everything that's not core type checking
                 --     diagnosticSeverityOverrides = {

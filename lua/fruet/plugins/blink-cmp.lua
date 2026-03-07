@@ -1,7 +1,7 @@
 return {
     'saghen/blink.cmp',
     -- optional: provides snippets for the snippet source
-    dependencies = { 'rafamadriz/friendly-snippets' ,"giuxtaposition/blink-cmp-copilot", },
+    dependencies = { 'rafamadriz/friendly-snippets', "giuxtaposition/blink-cmp-copilot", },
 
     -- use a release tag to download pre-built binaries
     version = '1.*',
@@ -25,7 +25,7 @@ return {
         -- C-k: Toggle signature help (if signature.enabled = true)
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
-        keymap = { 
+        keymap = {
             ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
             ['<C-e>'] = { 'hide', 'fallback' },
             ['<C-y>'] = { 'select_and_accept', 'fallback' },
@@ -52,19 +52,30 @@ return {
         },
 
         -- (Default) Only show the documentation popup when manually triggered
-        completion = { documentation = { auto_show = true } },
+        completion = { documentation = { auto_show = true }, trigger = { prefetch_on_insert = false } },
 
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         sources = {
-            default = { 'copilot', 'lsp', 'path', 'snippets', 'buffer', 'cmdline'},
+            -- Enable minuet for autocomplete
+            default = { 'copilot', 'lsp', 'path', 'snippets', 'buffer', 'cmdline' },
+            -- default = { 'lsp', 'path', 'snippets', 'buffer', 'cmdline' },
             providers = {
                 copilot = {
                     name = "copilot",
                     module = "blink-cmp-copilot",
                     score_offset = 100,
-                    async=true
-                }
+                    async = true
+                },
+                minuet = {
+                    name = 'minuet',
+                    module = 'minuet.blink',
+                    async = true,
+                    -- Should match minuet.config.request_timeout * 1000,
+                    -- since minuet.config.request_timeout is in seconds
+                    timeout_ms = 3000,
+                    score_offset = 50, -- Gives minuet higher priority among suggestions
+                },
             }
 
         },
@@ -75,7 +86,7 @@ return {
         --
         -- See the fuzzy documentation for more information
         fuzzy = { implementation = "prefer_rust_with_warning" },
-        signature={enabled=true},
+        signature = { enabled = true },
         cmdline = {
             keymap = { preset = 'inherit' },
             completion = { menu = { auto_show = true } }
