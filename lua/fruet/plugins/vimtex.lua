@@ -1,6 +1,6 @@
 return {
-   "lervag/vimtex",
-    enabled=true,
+    "lervag/vimtex",
+    enabled = true,
     init = function()
         -- Use init for configuration, don't use the more common "config".
         vim.g.vimtex_view_method = 'zathura'
@@ -19,7 +19,5 @@ return {
             end
         })
         --]]
-
     end
 }
-
