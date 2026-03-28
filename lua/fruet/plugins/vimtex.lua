@@ -1,9 +1,9 @@
 return {
-   "lervag/vimtex",
-    enabled=true,
+    "lervag/vimtex",
+    enabled = true,
     init = function()
         -- Use init for configuration, don't use the more common "config".
-        vim.g.vimtex_view_method = 'zathura'
+        vim.g.vimtex_view_method = 'sioyek'
         vim.g.vimtex_compiler_method = 'latexmk'
         --vim.g.vimtex_quickfix_mode = 0
 
@@ -19,7 +19,5 @@ return {
             end
         })
         --]]
-
     end
 }
-
