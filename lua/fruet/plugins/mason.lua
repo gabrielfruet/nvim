@@ -1,7 +1,7 @@
 return {
     {
         "williamboman/mason.nvim",
-        priority=100,
+        priority = 100,
         opts = {
             ui = {
                 icons = {
@@ -18,7 +18,7 @@ return {
         dependencies = {
             'neovim/nvim-lspconfig',
         },
-        opts={
+        opts = {
             ensure_installed = {
                 "lua_ls",
                 "rust_analyzer",
@@ -36,12 +36,12 @@ return {
     },
     {
         "rshkarin/mason-nvim-lint",
-        event={
+        event = {
             "BufReadPre",
             "BufNewFile"
         },
-        enabled=true,
-        dependencies={
+        enabled = true,
+        dependencies = {
             "williamboman/mason.nvim",
             "mfussenegger/nvim-lint",
         },
@@ -54,7 +54,7 @@ return {
                 'shellcheck',
                 'pylint',
                 'checkmake',
-                'luacheck',
+                'selene',
             },
 
             -- Whether linters that are set up (via nvim-lint) should be automatically installed if they're not already installed.
@@ -68,4 +68,3 @@ return {
         }
     }
 }
-
